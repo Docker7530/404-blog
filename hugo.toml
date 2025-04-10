@@ -1,4 +1,66 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
-theme = 'PaperMod'
+baseURL = "https://example.org/"
+languageCode = "zh-cn"
+title = "404-Blog"
+theme = "PaperMod"
+copyright = "[©2025 404 Blog](https://example.org/)"
+enableInlineShortcodes = true
+hasCJKLanguage = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableEmoji = true
+pygmentsUseClasses = true
+defaultContentLanguage = "zh"
+defaultContentLanguageInSubdir = false
+
+[languages.zh]
+languageName = "中文"
+weight = 1
+
+  [languages.zh.taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[[languages.zh.menus.main]]
+name = "首页"
+pageRef = "/"
+weight = 10
+
+[[languages.zh.menus.main]]
+name = "归档"
+pageRef = "archives/"
+weight = 20
+
+[[languages.zh.menus.main]]
+name = "分类"
+pageRef = "categories/"
+weight = 30
+
+[[languages.zh.menus.main]]
+name = "标签"
+pageRef = "tags/"
+weight = 40
+
+[[languages.zh.menus.main]]
+name = "搜索"
+pageRef = "search/"
+weight = 50
+
+[[languages.zh.menus.main]]
+name = "关于"
+pageRef = "about/"
+weight = 60
+
+[outputs]
+home = [ "HTML", "RSS", "JSON" ]
+
+[params.fuseOpts]
+isCaseSensitive = false
+shouldSort = true
+location = 0
+distance = 1_000
+threshold = 0.4
+minMatchCharLength = 0
+keys = [ "title", "permalink", "summary", "content" ]
+includeMatches = true
