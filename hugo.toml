@@ -64,3 +64,10 @@ threshold = 0.4
 minMatchCharLength = 0
 keys = [ "title", "permalink", "summary", "content" ]
 includeMatches = true
+
+[params.assets]
+  favicon = "favicon.svg"
+  favicon16x16 = "favicon.svg"
+  favicon32x32 = "favicon.svg"
+  apple_touch_icon = "favicon.svg"
+  safari_pinned_tab = "favicon.svg"
