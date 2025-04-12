@@ -1,4 +1,4 @@
-baseURL = "https://404blog.org/"
+baseURL = "https://www.404blog.org/"
 languageCode = "zh-cn"
 title = "404-Blog"
 theme = "PaperMod"
