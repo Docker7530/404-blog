@@ -1,6 +1,7 @@
-baseURL = "https://www.404blog.org/"
-languageCode = "zh-cn"
-title = "404-Blog"
+baseURL = 'https://www.404blog.org/'
+languageCode = 'zh-cn'
+title = '404-Blog'
+
 theme = "PaperMod"
 copyright = "[©2025 404 Blog](https://www.404blog.org)"
 enableInlineShortcodes = true
@@ -71,3 +72,17 @@ includeMatches = true
   favicon32x32 = "favicon.svg"
   apple_touch_icon = "favicon.svg"
   safari_pinned_tab = "favicon.svg"
+
+[markup.goldmark.renderHooks.image]
+enableDefault = true
+
+[markup.goldmark.renderHooks.link]
+enableDefault = true
+
+[[module.mounts]]
+source = 'assets'
+target = 'assets'
+
+[[module.mounts]]
+source = 'attachments'
+target = 'assets/attachments'
