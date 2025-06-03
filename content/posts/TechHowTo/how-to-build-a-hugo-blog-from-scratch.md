@@ -1,5 +1,5 @@
 ---
-title: 构建Hugo博客的完整指南：从搭建到部署
+title: 构建 HUGO 博客的完整指南：从搭建到部署
 date: 2025-04-15T02:55:35+08:00
 draft: false
 categories:
@@ -18,7 +18,7 @@ tags:
   - 性能优化
 ---
 
-# Hugo 简介及其优势
+# Hugo 简介
 
 Hugo 是一个开源的静态站点生成器，支持通过 Markdown 文件快速生成静态 HTML 页面。其主要优势包括：
 
@@ -27,45 +27,54 @@ Hugo 是一个开源的静态站点生成器，支持通过 Markdown 文件快�
 3. **易于部署**：生成的静态文件可直接托管于任意 Web 服务器，无需复杂的后端支持。
 4. **学术友好性**：Hugo 支持 Markdown 格式，与学术写作常用的编辑工具（如 Obsidian）无缝衔接，便于内容管理和版本控制。
 
-对于希望构建个人学术博客的学者而言，Hugo 提供了一种高效、低成本且易于维护的解决方案。
-
 # 官网导航
 
-[官网](https://gohugo.io/)
+[官方网站](https://gohugo.io/)
 
 [官方论坛](https://discourse.gohugo.io/)
 
 [中文官网](https://hugo.opendocs.io/)
 
-# 发布流程
+# 流程概览
 
-使用 **Obsidian** 编辑 Markdown 内容 -> 在 Windows 上运行 **Hugo** 本地预览 -> 通过 **Git** 推送至 **GitHub** -> **GitHub Actions** 自动编译 Hugo 站点并将静态文件部署到服务器 -> **Nginx** 提供静态文件服务 -> **Cloudflare** 实现全球 CDN 加速与 HTTPS 加密。
+Obsidian (创作) → Hugo (本地预览) → Git (推送至 GitHub) → GitHub Actions (自动编译部署) → Nginx (静态服务) → Cloudflare (全球加速与HTTPS) → 全球用户访问
 
-# 初始化 Hugo 站点
+# 站点初始化
 
 ```shell
+# 创建一个新的 Hugo 站点，命名为 404-blog
 hugo new site 404-blog
 
+# 进入新创建的站点目录
 cd 404-blog
 
+# 初始化 Git 仓库，用于版本管理和代码托管
 git init
+# 设置 Git 的提交用户信息
 git config user.name "404"
 git config user.email "404@example.com"
+# 暂存所有文件，准备提交
 git add .
+# 提交更改，记录初始化的站点结构
 git commit -m "Initial commit"
 
+# 添加 Hugo PaperMod 主题作为 Git 子模块，方便管理和更新主题
 git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+# 在配置文件 hugo.toml 中设置主题为 PaperMod
 echo "theme = 'PaperMod'" >> hugo.toml
 
-# 增加 .gitignore
+# （此处手动添加 .gitignore 文件，用于忽略不必要的文件，如 node_modules 或临时文件）
 
+# 暂存所有更改，包括主题和 .gitignore 文件
 git add .
+# 提交更改，记录主题和忽略文件的添加
 git commit -m "Add PaperMod theme and .gitignore file"
 
+# 启动 Hugo 本地服务器，预览站点效果
 hugo server
 ```
 
-`.gitignore` 参考 `PaperMod` 作者提供的文件。
+其中 `.gitignore` 可参考 `PaperMod` 作者提供的文件。
 
 ```
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
@@ -474,7 +483,7 @@ jobs:
 
 ## 1. 本地存储方案
 
-此方案来源于 HUGO 论坛的 jmooring 最佳解决方案：
+此方案来源于 Hugo 论坛的 jmooring 最佳解决方案：
 
 **Obsidian 配置**
 
@@ -488,7 +497,7 @@ jobs:
 
 对应了设置中的如下配置，我图片存储在了 images 下：
 
-![](attachments/images/image-20250428211114872.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428211114872.png)
 
 **Hugo 配置**
 
@@ -526,43 +535,47 @@ attachments/
 
 我的配置如下：
 
-![](attachments/images/image-20250428212131712.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250603213730484.png)
 
-![](attachments/images/image-20250428212220373.png)
+上图重 `Attachment location` 需为 `/`，否则不适配插件会有找不到图片的异常信息。
 
-所需要的配置在 R2 配置界面均可以找到：
+![](https://assets.404blog.org/assets/attachments/images/image-20250603213835016.png)
 
-![](attachments/images/image-20250428212524005.png)
+上图所需要的配置在 R2 配置界面均可以找到：
+
+![](https://assets.404blog.org/assets/attachments/images/image-20250428212524005.png)
 
 存储桶设置中，推荐自定义域，当然前提时你需要在 Cloud flare 进行域名托管。才可以使用子域。
 
-![](attachments/images/image-20250428212652549.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428212652549.png)
 
 # 缓存加速
 
+本设计主要聚焦于 Ng 和 Cloudflare 的配置，操作简单，基本通过点击即可完成。重点内容通过截图展示，一目了然。如果您想深入学习更专业的使用方法，建议参考相关教程。
+
 ## 1. Ng 加速配置
 
-如果使用上述 Ng 配置已经配置好了大多数缓存配置和安全策略。
+使用上述 Ng 配置已经处理好了大多数缓存配置和安全策略。
 
 ## 2. Cloud flare 缓存
 
 将域名托管到 Cf 后，可以新增 Cache Rules。
 
-![](attachments/images/image-20250428213040868.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428213040868.png)
 
 具体规则如下：
 
-![](attachments/images/image-20250428213148844.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428213148844.png)
 
-![](attachments/images/image-20250428213205719.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428213205719.png)
 
 ## 3. SSL/TLS 加密
 
-![](attachments/images/image-20250428213426039.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428213426039.png)
 
-![](attachments/images/image-20250428213528347.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428213528347.png)
 
-![](attachments/images/image-20250428213552615.png)
+![](https://assets.404blog.org/assets/attachments/images/image-20250428213552615.png)
 
 CloudFlare 为用户提供的源服务器证书是由 Cloudflare 签名的免费 TLS 证书，该域名证书属于泛域名证书，最长支持 15 年，主要用于源服务器和 Cloudflare 之间的流量加密。但是这个证书属于自签名证书，证书链不完整，缺少根证书。
 
