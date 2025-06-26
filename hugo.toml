@@ -77,7 +77,7 @@ images = ["https://i.postimg.cc/7hwBy7VS/calcr.png"]                            
 DateFormat = "2006-01-02"                                                       # 这个时间是作者自己写的，只能这样写
 
 [params.homeInfoParams]
-Title = "200 ? 200 ! 🚥"
+Title = "修身、齐家、治国、平天下。"
 Content = '''
     刷新成功！
     

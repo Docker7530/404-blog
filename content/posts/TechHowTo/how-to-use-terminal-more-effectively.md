@@ -44,6 +44,12 @@ winget install --id Microsoft.PowerShell --source winget
 winget install --id Microsoft.PowerShell.Preview --source winget
 ```
 
+更新操作
+
+```PowerShell
+winget upgrade Microsoft.PowerShell
+```
+
 ## 配置 PowerShell
 
 首次在系统上安装 PowerShell 时，配置文件脚本文件和它们所属的目录不存在。 以下命令创建“当前用户，当前主机”配置文件脚本文件（如果不存在）。
@@ -62,6 +68,11 @@ function gitl { git log --oneline --graph --decorate }
 function ep { code $PROFILE }
 function hosts { notepad C:\Windows\System32\drivers\etc\hosts }
 function vim { nvim $args }
+
+Set-PSReadLineOption -PredictionSource History, Plugin
+Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineOption -EditMode Windows
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 ```
 
 # 安装 Windows 终端
@@ -101,6 +112,104 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/jandedobbeleer.omp.json" | 
 ```
 
 Oh My Posh 同样支持使用远程配置（但个人实测会有卡顿），本地配置会更加流畅。
+
+## 个人配置
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "#ff479c",
+          "foreground": "#ffffff",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b0",
+          "properties": {
+            "folder_separator_icon": " \ue0b1 ",
+            "home_icon": "~",
+            "style": "unique"
+          },
+          "style": "diamond",
+          "template": " \uea83  {{ .Path }} ",
+          "type": "path"
+        },
+        {
+          "background": "#E57020",
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_version": false
+          },
+          "style": "powerline",
+          "template": " \ue738 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
+          "type": "java"
+        },
+        {
+          "background": "#8ED1F7",
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_version": true
+          },
+          "style": "powerline",
+          "template": " \ue626 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
+          "type": "go"
+        },
+        {
+          "background": "#ffff66",
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": " \uf0ad ",
+          "type": "root"
+        },
+        {
+          "background": "#83769c",
+          "foreground": "#ffffff",
+          "properties": {
+            "always_enabled": true
+          },
+          "style": "plain",
+          "template": "<transparent>\ue0b0</> \ueba2 {{ .FormattedMs }}\u2800",
+          "type": "executiontime"
+        },
+        {
+          "background": "#00897b",
+          "background_templates": ["{{ if gt .Code 0 }}#e91e63{{ end }}"],
+          "foreground": "#ffffff",
+          "properties": {
+            "always_enabled": true
+          },
+          "style": "diamond",
+          "template": "<parentBackground>\ue0b0</> \ue23a ",
+          "trailing_diamond": "\ue0b4",
+          "type": "status"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "segments": [
+        {
+          "foreground": "#ffffff",
+          "invert_powerline": true,
+          "style": "diamond",
+          "template": "\uefc5 {{ round .PhysicalPercentUsed .Precision}}% ",
+          "type": "sysinfo"
+        }
+      ],
+      "type": "rprompt"
+    }
+  ],
+  "console_title_template": "{{ .Shell }} in {{ .Folder }}",
+  "final_space": true,
+  "version": 3
+}
+
+```
 
 # 安装 Scoop
 
