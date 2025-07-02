@@ -8,6 +8,7 @@ tags:
   - shadowsocks
   - 网络技术
 ---
+
 基于 Ubuntu 的服务器，安装和配置 `shadowsocks-libev`，并结合 `v2ray-plugin` 插件来增强其伪装能力。
 
 [官网](https://shadowsocks.org/)
